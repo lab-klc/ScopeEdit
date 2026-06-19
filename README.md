@@ -2,7 +2,7 @@
 
 # ScopeEdit
 
-**Multimodal Knowledge Edit-Scoped Generalization for Online Recursive MLLM Editing**
+### **Multimodal Knowledge Edit-Scoped Generalization for Online Recursive MLLM Editing**
 
 <p>
   <b>Scope-aware online editing</b> ·
@@ -26,13 +26,6 @@
   <a href="#evaluation">Evaluation</a> |
   <a href="#acknowledgement">Acknowledgement</a> |
   <a href="#citation">Citation</a>
-</p>
-
-<p>
-  <a href="assets/readme/scopeedit_intro.png"><b>Motivation Figure</b></a> ·
-  <a href="assets/readme/scopeedit_pilot.png"><b>Pilot Study Figure</b></a> ·
-  <a href="./MMEdit.md"><b>MMEdit Notes</b></a> ·
-  <a href="https://github.com/zjunlp/EasyEdit"><b>EasyEdit</b></a>
 </p>
 
 </div>
