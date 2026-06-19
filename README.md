@@ -224,20 +224,6 @@ The script prints warmup status, online sequential editing results, and frozen-p
 /root/autodl-tmp/results/SCOPEEDIT_Eval_BLIP2_OPT
 ```
 
-## Repository Layout
-
-```text
-.
-├── test_scopeedit_multisteps.py      # Main evaluation entry point
-├── test_bridge_multisteps.py         # Backward-compatible wrapper
-├── scopeedit_eval_utils.py           # Online editing evaluation helpers
-├── hparams/TRAINING/MORE             # ScopeEdit / M-ORE configs
-├── easyeditor                        # Model, dataset, and trainer code
-├── assets/readme                     # README figures
-├── MMEdit.md                         # Original MMEdit data notes
-└── easyedit_pip.txt                  # pip dependencies
-```
-
 ## Acknowledgement
 
 This implementation is built on top of [EasyEdit](https://github.com/zjunlp/EasyEdit). We thank the EasyEdit authors and community for providing the model-editing infrastructure.
