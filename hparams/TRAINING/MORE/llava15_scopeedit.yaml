@@ -1,0 +1,116 @@
+# hparams/TRAINING/MORE/llava15_scopeedit.yaml
+
+# ================= Model =================
+device: 0
+name: liuhaotian/llava-v1.5-7b
+model_name: /root/autodl-tmp/models/llava-v1.5-7b
+model_class: LlavaForConditionalGeneration
+tokenizer_class: AutoTokenizer
+tokenizer_name: /root/autodl-tmp/models/llava-v1.5-7b
+inner_params: []
+use_chat_template: True
+image_processor_name_or_path: null
+
+# ================= Method (ScopeEdit) =================
+alg: MORE
+rank: 512
+lora_alpha: 1024
+lora_dropout: 0.1
+top_k: 7
+eta: 0.1
+rls_lambda: 1
+n_last_layers: 12
+more_update_mode: online
+more_use_masked_z: True
+more_restore_p: False
+more_score_norm: none
+more_eta_vision: 0.001
+more_rls_lambda_vision: null
+more_basis_init: orthogonal # orthogonal | gaussian | xavier | pca | svd for ScopeEdit basis-init ablations.
+more_basis_num_batches: 1
+more_basis_max_samples: 4096
+more_basis_batch_key: edit_inner
+more_nonlinear: none
+more_layer_norm: False
+more_layer_norm_eps: 1e-5
+scopeedit_enable: True # Enable ScopeEdit shared/private propagation updates.
+rank_private: 448 # Private subspace rank; must satisfy rank_private + rank_shared = rank.
+rank_shared: 64 # ScopeEdit shared subspace rank used for cross-modal propagation.
+scopeedit_num_layers: 6 # Number of highest-spectrum groups allowed to use shared propagation. Selected from more/top_groups each step.
+# ablation study
+scopeedit_scope_mode: gated # gated | always_on. always_on disables the evidence-based scope gate.
+scopeedit_scope_separation: True # False makes shared/private branches reuse the same low-rank row space.
+#
+scopeedit_tau: 0.2 # Cosine-agreement threshold for opening shared propagation.
+scopeedit_beta: 10.0 # Sharpness of the scope gating sigmoid around scopeedit_tau.
+scopeedit_lambda_private: null # Optional override for the private-space recursive regularizer.
+scopeedit_lambda_shared: 1 # Optional override for the shared-space recursive regularizer.
+scopeedit_eta_shared: 1.0 # Optional override for the shared-space update step size.
+scopeedit_pooling: mean # Pooling rule used to form text/vision keys from token features.
+scopeedit_use_projector_layer: False # Let vision_proj participate in shared propagation updates.
+scopeedit_use_vision_encoder_layer: False # Let vision_encoder groups participate in shared propagation updates.
+scopeedit_visual_anchor_enable: False # Use an explicit visual anchor layer range for text-side shared gates.
+scopeedit_visual_anchor_start: 16 # Optional inclusive start layer for the visual anchor source window.
+scopeedit_visual_anchor_end: 18 # Optional inclusive end layer for the visual anchor source window. if start <= layer_idx <= end
+
+more_accumulate_locality_keys: True
+more_accumulate_locality_keys_in_training: True
+more_locality_key_groups: active      # activa // all
+more_locality_key_include_shared: False
+more_locality_key_lambda: null
+more_locality_key_lambda_shared: null
+
+more_edit_text_llm: True
+more_edit_projector: True
+more_edit_vision_encoder: False
+more_vision_num_layers: 3 # Last vision encoder layers; use 24 for the full LLaVA-v1.5 CLIP tower.
+  
+# ================= Weights for Metrics =================
+cedit: 0.1
+iedit: 0.1
+cloc: 1
+cbase: 1.0
+dropout: 0.0
+train_base: False
+no_grad_layers: null
+archive: null
+# lr: 1e-6
+lr: 0
+seed: 42
+
+# ================= Train / Eval =================
+batch_size: 1
+model_save_pt: 200
+silent: False
+max_iters: 1000
+log_interval: 1
+eval_log_interval: 1000
+final_eval: True
+val_interval: 100
+early_stop_patience: 1000
+early_stop_key: "loss/total_edit_val"
+eval_only: True
+half: False
+save: False
+verbose: True
+debug: False
+
+val_batch_size: 1
+accumulate_bs: 2
+val_steps: 100
+opt: Adam
+grad_clip: 100.
+
+# ================= Output =================
+results_dir: /root/autodl-tmp/results/SCOPEEDIT_Eval_LLaVA15
+
+# ================= Multimodal =================
+exact_match: False
+qformer_checkpoint: null
+qformer_name_or_path: ""
+state_dict_file: ""
+pretrained_ckpt: null
+
+# ================= Image =================
+coco_image: /root/autodl-tmp/data
+rephrase_image: /root/autodl-tmp/data

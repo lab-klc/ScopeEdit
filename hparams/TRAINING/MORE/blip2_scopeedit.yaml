@@ -1,0 +1,106 @@
+# hparams/TRAINING/MORE/blip2_scopeedit.yaml
+
+# ================= Model =================
+device: 0
+name: /root/autodl-tmp/models/opt-2.7b
+model_name: blip2
+model_class: Blip2OPT
+tokenizer_class: GPT2Tokenizer
+tokenizer_name: /root/autodl-tmp/models/opt-2.7b
+inner_params: []
+opt_precision: bf16
+
+# ================= Method (ScopeEdit) =================
+alg: MORE
+rank: 128
+lora_alpha: 256
+lora_dropout: 0.0
+top_k: 7
+eta: 0.05
+rls_lambda: 1
+n_last_layers: 12
+more_update_mode: online
+more_use_masked_z: True
+more_restore_p: False
+more_score_norm: none
+more_eta_vision: 0.001
+more_rls_lambda_vision: 1
+more_basis_init: orthogonal
+more_basis_num_batches: 8
+more_basis_max_samples: 512
+more_basis_batch_key: edit_inner
+more_nonlinear: none
+more_layer_norm: True
+more_layer_norm_eps: 1e-5
+scopeedit_enable: True # Enable ScopeEdit shared/private propagation updates.
+rank_private: 104 # Private subspace rank; must satisfy rank_private + rank_shared = rank.
+rank_shared: 24 # ScopeEdit shared subspace rank used for cross-modal propagation.
+scopeedit_num_layers: 6 # Number of highest-spectrum language groups allowed to use shared propagation.
+scopeedit_tau: 0.2 # Cosine-agreement threshold for opening shared propagation.
+scopeedit_beta: 10.0 # Sharpness of the scope gating sigmoid around scopeedit_tau.
+scopeedit_lambda_private: null # Optional override for the private-space recursive regularizer.
+scopeedit_lambda_shared: 1 # Optional override for the shared-space recursive regularizer.
+scopeedit_eta_shared: 0.5 # Optional override for the shared-space update step size.
+scopeedit_pooling: mean # Pooling rule used to form text/vision keys from token features.
+scopeedit_use_projector_layer: False # Keep default shared propagation on OPT language groups only.
+scopeedit_visual_anchor_enable: False # Visual-anchor gating is only used by the current LLaVA path.
+scopeedit_visual_anchor_start: null
+scopeedit_visual_anchor_end: null
+
+more_accumulate_locality_keys: True
+more_accumulate_locality_keys_in_training: True
+more_locality_key_groups: active      # activa // all
+more_locality_key_include_shared: False
+more_locality_key_lambda: null
+more_locality_key_lambda_shared: null
+
+# ================= Weights for Metrics =================
+cedit: 0.1
+iedit: 0.1
+cloc: 1.0
+cbase: 1.0
+dropout: 0.0
+train_base: False
+no_grad_layers: null
+archive: null
+lr: 0
+seed: 42
+
+# ================= Train / Eval =================
+batch_size: 1
+model_save_pt: 200
+silent: False
+max_iters: 1000
+log_interval: 1
+eval_log_interval: 1000
+final_eval: True
+val_interval: 200
+early_stop_patience: 1000
+early_stop_key: "loss/total_edit_val"
+eval_only: True
+half: False
+save: False
+verbose: True
+debug: False
+
+val_batch_size: 1
+accumulate_bs: 2
+val_steps: 20
+opt: Adam
+grad_clip: 100.
+
+# ================= Output =================
+results_dir: /root/autodl-tmp/results/SCOPEEDIT_Eval_BLIP2_OPT
+
+# ================= Multimodal =================
+exact_match: False
+freeze_vit: True
+freeze_qformer: True
+qformer_checkpoint: /root/blip_models/blip2_pretrained_opt2.7b.pth
+qformer_name_or_path: bert-base-uncased
+state_dict_file: /root/blip_models/eva_vit_g.pth
+pretrained_ckpt: null
+
+# ================= Image =================
+coco_image: /root/autodl-tmp/data
+rephrase_image: /root/autodl-tmp/data

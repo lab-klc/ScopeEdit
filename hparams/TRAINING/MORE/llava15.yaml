@@ -1,0 +1,83 @@
+# hparams/TRAINING/MORE/llava15.yaml
+
+# ================= Model =================
+device: 0
+name: liuhaotian/llava-v1.5-7b
+model_name: /root/autodl-tmp/models/llava-v1.5-7b
+model_class: LlavaForConditionalGeneration
+tokenizer_class: AutoTokenizer
+tokenizer_name: /root/autodl-tmp/models/llava-v1.5-7b
+inner_params: []
+use_chat_template: True
+
+# ================= Method (M-ORE) =================
+alg: MORE
+rank: 512
+lora_alpha: 1024
+lora_dropout: 0.0
+top_k: 7
+eta: 0.1
+rls_lambda: 2000
+n_last_layers: 12
+more_update_mode: online
+more_use_masked_z: True
+more_restore_p: False
+more_score_norm: none
+more_eta_vision: null
+more_rls_lambda_vision: null
+more_nonlinear: none
+more_layer_norm: False
+more_layer_norm_eps: 1e-5
+more_basis_init: xavier
+more_basis_num_batches: 1
+more_basis_max_samples: 4096
+more_basis_batch_key: loc
+
+# ================= Weights for Metrics =================
+cedit: 0.1
+iedit: 0.1
+cloc: 1.0
+cbase: 1.0
+dropout: 0.0
+train_base: False
+no_grad_layers: null
+archive: null
+lr: 1e-6
+seed: 42
+
+# ================= Train / Eval =================
+batch_size: 1
+model_save_pt: 200
+silent: False
+max_iters: 1000
+log_interval: 1
+eval_log_interval: 1000
+final_eval: True
+val_interval: 200
+early_stop_patience: 1000
+early_stop_key: "loss/total_edit_val"
+eval_only: True
+half: False
+save: False
+verbose: True
+debug: False
+
+val_batch_size: 1
+accumulate_bs: 2
+val_steps: 100
+opt: Adam
+grad_clip: 100.
+
+# ================= Output =================
+results_dir: /root/autodl-tmp/results/MORE_Eval_LLaVA15
+
+# ================= Multimodal =================
+exact_match: False
+qformer_checkpoint: null
+qformer_name_or_path: ""
+state_dict_file: ""
+pretrained_ckpt: null
+
+# ================= Image =================
+coco_image: /root/autodl-tmp/data
+rephrase_image: /root/autodl-tmp/data

@@ -1,0 +1,78 @@
+# hparams/TRAINING/MORE/minigpt4.yaml
+
+# ================= Model =================
+device: 0  # CUDA device index used by trainer/dataset .to()
+name: /root/autodl-tmp/models/Xorbits/vicuna-7b-v1.5  # LLaMA/Vicuna path for MiniGPT4 (llama_model)
+model_name: minigpt4  # selects MiniGPT4 builder + multimodal collate path
+model_class: Blip2OPT  # compatibility field; not used when model_name=minigpt4
+tokenizer_class: LlamaTokenizer  # tokenizer class used by CaptionDataset
+tokenizer_name: /root/autodl-tmp/models/Xorbits/vicuna-7b-v1.5  # tokenizer weights path; fallback if None is name
+inner_params: []  # inner params list (unused for M-ORE; validated in get_model)
+
+# ================= Method (M-ORE) =================
+alg: MORE  # selects trainer alg in ALG_TRAIN_DICT
+rank: 512 # LoRA rank (A/B size)
+lora_alpha: 1024  # LoRA scaling, scaling = alpha / rank
+lora_dropout: 0.0  # dropout before LoRA A
+top_k: 7 # top-k LoRA groups to update per edit
+eta: 0.1  # RLS update step size
+rls_lambda: 2000  # RLS regularization
+n_last_layers: 12  # inject LoRA into last N LLaMA layers (up/down)
+more_update_mode: online  # online keeps edits; temporary restores after eval
+more_use_masked_z: True  # use target-token mask for z; False uses all tokens
+more_restore_p: True  # temporary mode: restore P if True; keep P accumulated if False
+more_score_norm: none # none | param (normalize score by param count)
+more_eta_vision: null  # override eta for vision_proj (null uses eta)
+more_rls_lambda_vision: null  # override rls_lambda for vision_proj (null uses rls_lambda)
+more_nonlinear: none  # none | gelu | relu | tanh | silu
+more_layer_norm: False  # apply LayerNorm on LoRA features
+more_layer_norm_eps: 1e-5
+
+# ================= Weights for Metrics =================
+cedit: 0.5  # weight for text edit loss
+iedit: 0.1  # weight for image edit loss
+cloc: 1.0  # weight for locality losses (text + image)
+cbase: 1.0  # base loss weight (base loss is 0 in MultimodalTrainer)
+dropout: 0.0  # override model dropout rates in get_model
+train_base: False  # clone original_model in BaseTrainer (unused in MultimodalTrainer)
+no_grad_layers: null  # optional layer cast control in get_model (used with half)
+archive: null  # path to checkpoint to load in BaseTrainer
+lr: 1e-6  # optimizer lr (used only if eval_only=False)
+seed: 42  # not used in Trainer; for reproducibility if you seed manually
+
+# ================= Train / Eval =================
+batch_size: 1  # train dataloader batch size
+model_save_pt: 100  # unused in BaseTrainer
+silent: False  # suppress logging in BaseTrainer.echo
+max_iters: 100  # max training steps (ignored when eval_only=True)
+log_interval: 1  # training log frequency
+eval_log_interval: 1000  # unused in BaseTrainer
+final_eval: False  # run validation after training/eval loop
+val_interval: 100  # validation frequency (steps)
+early_stop_patience: 1000  # early-stop patience (steps)
+early_stop_key: "loss/total_edit_val"  # metric to monitor for early stop
+eval_only: False # skip training; run eval only
+half: False  # enable mixed precision path in get_model (with no_grad_layers)
+debug: False  # affects saving and val_steps usage
+save: False  # allow saving checkpoints/results
+verbose: True  # unused by Trainer (used by some model utils)
+
+val_batch_size: 1  # validation dataloader batch size
+accumulate_bs: 2  # gradient accumulation steps (safe_backward)
+val_steps: 1000  # number of validation steps (None when not debug in final_eval)
+opt: Adam  # optimizer class name (torch.optim)
+grad_clip: 100.  # gradient norm clip in train_step
+
+# ================= Output =================
+results_dir: /root/autodl-tmp/results/MORE_Eval  # output directory for models/results
+
+# ================= Multimodal =================
+exact_match: False  # edit accuracy metric exact-match toggle
+qformer_checkpoint: /root/autodl-tmp/models/blip2_pretrained_flant5xxl.pth  # Q-Former weights
+qformer_name_or_path: bert-base-uncased  # Q-Former config/tokenizer name
+state_dict_file: /root/autodl-tmp/models/eva_vit_g.pth  # EVA ViT weights
+pretrained_ckpt: /root/autodl-tmp/models/prerained_minigpt4_7b.pth  # MiniGPT4 checkpoint
+
+# ================= Image =================
+coco_image: /root/autodl-tmp/data  # image root for CaptionDataset
+rephrase_image: /root/autodl-tmp/data  # rephrase image root for CaptionDataset
