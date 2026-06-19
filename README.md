@@ -29,8 +29,8 @@
 </p>
 
 <p>
-  <a href="assets/readme/scopeedit_intro.pdf"><b>Motivation Figure</b></a> ·
-  <a href="assets/readme/scopeedit_pilot.pdf"><b>Pilot Study Figure</b></a> ·
+  <a href="assets/readme/scopeedit_intro.png"><b>Motivation Figure</b></a> ·
+  <a href="assets/readme/scopeedit_pilot.png"><b>Pilot Study Figure</b></a> ·
   <a href="./MMEdit.md"><b>MMEdit Notes</b></a> ·
   <a href="https://github.com/zjunlp/EasyEdit"><b>EasyEdit</b></a>
 </p>
@@ -40,7 +40,7 @@
 ScopeEdit is a scope-aware online editor for multimodal large language models. Instead of only asking whether an edit succeeds on the original request, ScopeEdit controls where the edited knowledge is allowed to propagate and where it should remain invisible.
 
 <p align="center">
-  <img src="assets/readme/scopeedit_intro.pdf" alt="ScopeEdit motivation" width="99%">
+  <img src="assets/readme/scopeedit_intro.png" alt="ScopeEdit motivation" width="99%">
 </p>
 
 ## Overview
@@ -56,7 +56,7 @@ The method implements this principle through three coupled mechanisms:
 ### Pilot Observation
 
 <p align="center">
-  <img src="assets/readme/scopeedit_pilot.pdf" alt="Pilot analysis" width="96%">
+  <img src="assets/readme/scopeedit_pilot.png" alt="Pilot analysis" width="96%">
 </p>
 
 Our pilot study shows that reliable edits are not necessarily scope-correct. Among already successful edits, only `62.20%` achieve proper generalization; `28.60%` under-generalize to in-scope variants, `7.20%` over-generalize to out-of-scope inputs, and `2.00%` suffer from entangled failures. Layer-wise analysis further shows that cross-modal edit responses concentrate in deeper semantic layers, motivating evidence-gated shared propagation in ScopeEdit.
