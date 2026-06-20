@@ -233,10 +233,10 @@ For multimodal data preparation and the original MMEdit notes, see [MMEdit.md](.
 ## Citation
 
 ```bibtex
-@article{li2026modality,
-  title={Modality-Decoupled Online Recursive Editing},
-  author={Li, Siyuan and Zhang, Youyuan and Liu, Fangming and Li, Jing},
-  journal={arXiv preprint arXiv:2605.20273},
-  year={2026}
+@misc{li2026multimodal,
+  title={{Multimodal Knowledge Edit-Scoped Generalization for Online Recursive MLLM Editing}},
+  author={Li, Siyuan and Zhang, Youyuan and Liu, Ruitong and Wang, Junxi and Li, Jing},
+  year={2026},
+  note={Manuscript under review}
 }
 ```
