@@ -234,7 +234,7 @@ For multimodal data preparation and the original MMEdit notes, see [MMEdit.md](.
 
 ```bibtex
 @misc{li2026multimodal,
-  title={{Multimodal Knowledge Edit-Scoped Generalization for Online Recursive MLLM Editing}},
+  title={Multimodal Knowledge Edit-Scoped Generalization for Online Recursive MLLM Editing},
   author={Li, Siyuan and Zhang, Youyuan and Liu, Ruitong and Wang, Junxi and Li, Jing},
   year={2026},
   note={Manuscript under review}
